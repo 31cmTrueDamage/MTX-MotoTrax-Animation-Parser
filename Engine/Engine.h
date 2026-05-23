@@ -1,0 +1,1 @@
+int Engine_IsAsyncEnabled();
