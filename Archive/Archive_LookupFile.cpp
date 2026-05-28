@@ -47,7 +47,7 @@ int* Archive_LookupFile(Archive* archive, char* filepath)
                 //FUN_00547070(); // Mutex Unlock
                 
                 // Decompress from source data into our newly allocated buffer
-                //LZSS_Decompress(state->compressedData, state->cachedBuffer, state->uncompressedSize);
+                LZSS_Decompress(state->compressedData, state->cachedBuffer, state->uncompressedSize);
             }
             
             return fileMetadata;

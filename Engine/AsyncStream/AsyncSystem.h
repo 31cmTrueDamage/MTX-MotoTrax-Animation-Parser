@@ -48,4 +48,6 @@ extern AsyncStream* g_StreamPool[16];
 void Async_ToggleCallbackBuffer(void);
 void Async_ProcessCallbacks(void);
 AsyncStream* AsyncStream_Pool_Acquire(void);
+int AsyncStream_Pool_Release(AsyncStream* stream);
 bool AsyncStream_Initialize(AsyncStream* stream, char* filepath, uint8_t priority, int userData);
+AsyncStream* AsyncStream_Create(char* filename, uint8_t priority, int flags);

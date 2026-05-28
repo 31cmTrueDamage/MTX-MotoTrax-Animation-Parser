@@ -40,8 +40,11 @@ struct FileNode {
 };
 
 struct ArchiveFileTable {
-    uint32_t  configBits;  // +0x00 (low 5 bits = log2 of bucket count)
-    FileNode* buckets;     // +0x04 (Array of FileNodes)
+    uint32_t  configBits;    // +0x00 (low 5 bits = log2 of bucket count)
+    FileNode* buckets;       // +0x04 (Array of FileNodes)
+    uint32_t  _unk08;        // +0x08
+    int32_t   searchIndex;   // +0x0C (Used dynamically by Iterator)
+    FileNode* activeNode;    // +0x10 (Used dynamically by Iterator)
 };
 
 struct EntryState {
