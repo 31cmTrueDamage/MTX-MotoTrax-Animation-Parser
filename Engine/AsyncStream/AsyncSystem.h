@@ -17,7 +17,7 @@ struct AsyncStreamVTable {
 struct AsyncStream {
     AsyncStreamVTable* vtable; // 0x00
     
-    uint32_t field_04;         // 0x04 (stream[1]) - Success flag
+    uint32_t fileSize;         // 0x04 (stream[1]) - Success flag
     uint32_t field_08;         // 0x08 (stream[2])
     uint32_t field_0C;         // 0x0C (stream[3])
     uint32_t field_10;         // 0x10 (stream[4])
@@ -30,10 +30,10 @@ struct AsyncStream {
     
     uint32_t field_20;         // 0x20 (stream[8]) - initialized to 0x10000
     int32_t  userData;         // 0x24 (stream[9]) - initialized to 100
-    int32_t  field_28;         // 0x28 (stream[10]) - initialized to -1
-    int32_t  field_2C;         // 0x2C (stream[0xb]) - initialized to -1
+    int32_t  asyncSize;         // 0x28 (stream[10]) - initialized to -1
+    uint32_t  pad2;         // 0x2C (stream[0xb]) - initialized to -1
     
-    int32_t  fileHandle;       // 0x30 (stream[0xc])
+    int*  fileHandle;       // 0x30 (stream[0xc])
     int32_t  isBusy;           // 0x34 (stream[0xd])
 };
 
@@ -51,3 +51,4 @@ AsyncStream* AsyncStream_Pool_Acquire(void);
 int AsyncStream_Pool_Release(AsyncStream* stream);
 bool AsyncStream_Initialize(AsyncStream* stream, char* filepath, uint8_t priority, int userData);
 AsyncStream* AsyncStream_Create(char* filename, uint8_t priority, int flags);
+uint32_t AsyncStream_GetFileSize(AsyncStream* stream);

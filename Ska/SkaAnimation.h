@@ -89,7 +89,7 @@ struct AnimationCache {
 // --------------------------------------------------------
 
 // Standard Loader
-void __thiscall Ska_LoadAnimFromFile(AnimData* animObj, const char* filename, uint32_t loadFlags, bool allowAsync, bool allowCache);
+void __thiscall Ska_LoadAnimFromFile(AnimData* animObj, char* filename, uint32_t loadFlags, bool allowAsync, bool allowCache);
 
 // The Parser (This reads the raw .ska bytes and fills out the pointers at 0x18, 0x1C, 0x34, 0x38)
 void __thiscall Ska_InitAnimationInstance(AnimData* animObj);

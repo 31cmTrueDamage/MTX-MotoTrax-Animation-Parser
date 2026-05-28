@@ -10,7 +10,7 @@ struct VFS_Context {
     void* currentArchive;
     int* fileEntry; // 0x04
     int resolvedAddress; // 0x08
-    void*            _unk0C;   //0x0C
+    int* failedFileHandle;   //0x0C
     ArchiveIterator* iterator; // 0x10
 };
 
@@ -19,3 +19,5 @@ extern VFS_Context* VFS_Address;
 bool VFS_IsInitialized();
 int VFS_OpenFile(char* filepath, const char* mode, uint8_t flag);
 int VFS_FindEntry(VFS_Context* vfsContext, char* filepath);
+int VFS_GetFileSize(int* fileHandle);
+int VFS_ValidateHandle(VFS_Context* vfs, int* fileHandle);
