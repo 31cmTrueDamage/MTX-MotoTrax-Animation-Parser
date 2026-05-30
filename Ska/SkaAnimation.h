@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include "AsyncSystem.h"
 
 // Forward declarations
 struct Matrix4x4;
@@ -103,3 +104,5 @@ uint32_t __thiscall Ska_EvaluateChannels(AnimData* animData, float* outTranslati
 // Math Utilities
 void __fastcall Math_TransformToMatrix4x4(void* unused, float* inTranslation, float* inRotation, float* outMatrix);
 void __fastcall Math_TransformToMatrix_Mirrored(void* unused, float* inTranslation, float* inRotation, bool flipAxisA); // Uses BL register for flipAxisB
+
+void Ska_AsyncLoadCallback(AsyncStream* stream, int status, uint32_t flags, AnimData* animData);

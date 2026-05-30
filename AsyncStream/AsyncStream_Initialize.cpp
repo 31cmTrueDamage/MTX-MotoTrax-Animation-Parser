@@ -9,12 +9,12 @@ bool AsyncStream_Initialize(AsyncStream* stream, char* filepath, uint8_t priorit
     bool isVFSReady = VFS_IsInitialized();
     if (isVFSReady) {
         int fileHandle = VFS_OpenFile(filepath, "rb", 1);
-        stream->fileHandle = fileHandle;
-        stream->field_04 = 1;
+        stream->fileHandle = (int*)fileHandle;
+        stream->fileSize = 1;
         stream->priority = 1;
         g_ActiveStreamCount++;
         stream->isBusy++;
-        stream->vtable->StartRead(stream->state, stream->field_04, 0);
-        return (stream->field_04 != 0);
+        stream->vtable->StartRead(stream->state, stream->fileSize, 0);
+        return (stream->fileSize != 0);
     }   
 }

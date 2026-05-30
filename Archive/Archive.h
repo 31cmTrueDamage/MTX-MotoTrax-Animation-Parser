@@ -48,11 +48,11 @@ struct ArchiveFileTable {
 };
 
 struct EntryState {
-    uint32_t uncompressedSize; // +0x00 
-    uint8_t* compressedData;   // +0x04 
-    uint8_t* cachedBuffer;     // +0x08 
-    uint32_t seekPosition;     // +0x0C 
-    uint32_t allocSize;        // +0x10 
+    /* 0x00 */ uint32_t dataLocationFlag; // 0 = Raw Disk Data, 1 = Decompressed RAM Cache
+    /* 0x04 */ uint8_t* rawDataPtr;       // Used if Flag == 0
+    /* 0x08 */ uint8_t* cachedDataPtr;    // Used if Flag != 0
+    /* 0x0C */ uint32_t readCursor;       // The current offset/position in the file
+    /* 0x10 */ uint32_t totalFileSize;    // The total size of the file
 };
 
 // The actual Archive object itself

@@ -21,3 +21,5 @@ int VFS_OpenFile(char* filepath, const char* mode, uint8_t flag);
 int VFS_FindEntry(VFS_Context* vfsContext, char* filepath);
 int VFS_GetFileSize(int* fileHandle);
 int VFS_ValidateHandle(VFS_Context* vfs, int* fileHandle);
+int VFS_Read(uint8_t* buffer, int elementSize, int count, int* fileHandle);
+int VFS_RawRead(Archive* archive, uint8_t* buffer, uint32_t totalBytes);

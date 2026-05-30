@@ -1,5 +1,9 @@
 #pragma once
 #include <cstdint>
+#include "SkaAnimation.h"
+
+struct AsyncStream;
+typedef void (*AsyncCallbackPtr)(AsyncStream* stream, int status, uint32_t flags, void* userData);
 
 struct CallbackEntry {
     void* stream;
@@ -8,19 +12,32 @@ struct CallbackEntry {
 };
 
 struct AsyncStreamVTable {
-    void* padding_00;                                                // Offset 0x00
-    void (*StartRead)(uint32_t state, uint32_t field_4, uint32_t);   // Offset 0x04
-    void (*Reset)();                                                 // Offset 0x08
-    bool (*HandleError)(char* filepath);                             // Offset 0x0C
+    void* padding_00;                                                // 0x00
+    void (*StartRead)(uint32_t state, uint32_t field_4, uint32_t);   // 0x04
+    void (*Reset)();                                                 // 0x08
+    bool (*HandleError)(char* filepath);                             // 0x0C
+    
+    void* unk_10; // 0x10
+    void* unk_14; // 0x14
+    void* unk_18; // 0x18
+    void* unk_1C; // 0x1C
+    void* unk_20; // 0x20
+    void* unk_24; // 0x24
+    void* unk_28; // 0x28
+    void* unk_2C; // 0x2C
+    void* unk_30; // 0x30
+    void* unk_34; // 0x34
+    
+    int (*PlatformAsyncRead)(uint8_t* buffer, int elementSize, int count); // 0x38
 };
 
 struct AsyncStream {
     AsyncStreamVTable* vtable; // 0x00
     
     uint32_t fileSize;         // 0x04 (stream[1]) - Success flag
-    uint32_t field_08;         // 0x08 (stream[2])
-    uint32_t field_0C;         // 0x0C (stream[3])
-    uint32_t field_10;         // 0x10 (stream[4])
+    AsyncCallbackPtr callback;         // 0x08 (stream[2])
+    void* callbackContext;         // 0x0C (stream[3])
+    uint32_t loadFlags;     // 0x10 (stream[4])
     uint32_t state;            // 0x14 (stream[5]) - Status
     uint32_t field_18;         // 0x18 (stream[6])
     
@@ -47,8 +64,15 @@ extern AsyncStream* g_StreamPool[16];
 
 void Async_ToggleCallbackBuffer(void);
 void Async_ProcessCallbacks(void);
+
+int AsyncStream_StartRead(AsyncStream* stream, uint8_t* buffer, int elementSize, int count);
+
+void __thiscall AsyncStream_SetCallback(AsyncStream* stream, AsyncCallbackPtr callbackFunc, void* userData, uint32_t flags);
+
 AsyncStream* AsyncStream_Pool_Acquire(void);
+
 int AsyncStream_Pool_Release(AsyncStream* stream);
+
 bool AsyncStream_Initialize(AsyncStream* stream, char* filepath, uint8_t priority, int userData);
 AsyncStream* AsyncStream_Create(char* filename, uint8_t priority, int flags);
 uint32_t AsyncStream_GetFileSize(AsyncStream* stream);

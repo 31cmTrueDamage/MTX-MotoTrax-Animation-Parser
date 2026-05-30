@@ -36,19 +36,19 @@ AsyncStream* AsyncStream_Pool_Acquire(void) {
     AsyncStream* stream = g_StreamPool[currentSlotIdx];
 
     // Initialize all fields using the correct byte-aligned names
-    stream->field_28   = -1;
-    stream->field_2C   = -1;
+    stream->asyncSize   = -1;
+    stream->pad2   = -1;
     stream->isBusy     = 0;
-    stream->field_08   = 0;
-    stream->field_0C   = 0;
-    stream->field_10   = 0;
+    stream->callback   = 0;
+    stream->callbackContext   = 0;
+    stream->loadFlags   = 0;
     stream->state      = 0;
     stream->field_18   = 0;
     stream->field_1C   = 0;
     stream->priority   = 1;
     stream->field_20   = 0x10000;
     stream->userData   = 100;
-    stream->field_04   = 0;
+    stream->fileSize   = 0;
     stream->fileHandle = 0;
 
     // Call vtable Reset (+0x08)
